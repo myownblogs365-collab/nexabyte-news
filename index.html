@@ -514,8 +514,97 @@ footer {
   text-decoration: none;
   border-radius: 3px;
   transition: background 0.2s;
+  cursor: pointer;
+  border: none;
 }
 .read-more-btn:hover { background: #c0271a; }
+
+/* ARTICLE IFRAME VIEWER */
+.iframe-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 2000;
+  flex-direction: column;
+}
+.iframe-overlay.open { display: flex; }
+.iframe-toolbar {
+  background: var(--ink);
+  color: #fff;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.iframe-toolbar .site-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 16px;
+}
+.iframe-toolbar .site-name span { color: var(--accent); }
+.iframe-toolbar .article-title {
+  font-size: 12px;
+  color: #94a3b8;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.iframe-close-btn {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.iframe-notice {
+  background: #1a2a1a;
+  color: #86efac;
+  font-size: 12px;
+  padding: 6px 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.article-iframe {
+  flex: 1;
+  border: none;
+  width: 100%;
+  background: #fff;
+}
+.iframe-blocked {
+  flex: 1;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px;
+  text-align: center;
+}
+.iframe-blocked h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+.iframe-blocked p { color: var(--muted); font-size: 14px; max-width: 400px; }
+.open-external-btn {
+  background: var(--accent2);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-block;
+}
 </style>
 </head>
 <body>
@@ -658,9 +747,21 @@ footer {
       <div class="modal-meta" id="modalMeta"></div>
       <div class="modal-ad">Advertisement — AdSense In-Article Ad Here</div>
       <div class="modal-content" id="modalContent"></div>
-      <a href="#" id="modalLink" class="read-more-btn" target="_blank" rel="noopener">Read Full Article →</a>
+      <button class="read-more-btn" onclick="openIframe()">Read Full Article (Stay on NexaByte) →</button>
+      <a href="#" id="modalLink" style="display:block;margin-top:10px;font-size:12px;color:var(--muted);text-align:center;" target="_blank" rel="noopener">Open in original site ↗</a>
     </div>
   </div>
+</div>
+
+<!-- IFRAME ARTICLE VIEWER -->
+<div class="iframe-overlay" id="iframeOverlay">
+  <div class="iframe-toolbar">
+    <div class="site-name">Nexa<span>Byte</span></div>
+    <div class="article-title" id="iframeTitle">Loading article...</div>
+    <button class="iframe-close-btn" onclick="closeIframe()">✕ Back to NexaByte</button>
+  </div>
+  <div class="iframe-notice">📰 You are reading this article within NexaByte News — your site stays active!</div>
+  <iframe class="article-iframe" id="articleIframe" src="" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
 </div>
 
 <script>
@@ -834,18 +935,21 @@ function renderTicker(articles) {
 }
 
 // ---- OPEN MODAL ----
+let currentArticleLink = '#';
 function openModal(idx) {
   const a = allArticles[idx];
   if (!a) return;
+  currentArticleLink = a.link;
   document.getElementById('modalCat').textContent = a.category;
   document.getElementById('modalTitle').textContent = a.title;
   document.getElementById('modalMeta').textContent = `${a.source} · ${a.date}`;
   document.getElementById('modalContent').innerHTML = `
     <p>${a.desc}</p>
     <p>This article covers the latest developments in ${a.category}. The tech industry continues to evolve rapidly with new breakthroughs emerging daily. Stay tuned to NexaByte News for real-time updates and in-depth coverage.</p>
-    <p>For the complete story with all details, quotes, and analysis, click the button below to read the full article on ${a.source}.</p>
+    <p>Click <strong>"Read Full Article"</strong> below to read the complete story — you will stay on NexaByte News!</p>
   `;
   document.getElementById('modalLink').href = a.link;
+  document.getElementById('iframeTitle').textContent = a.title;
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -856,6 +960,41 @@ function closeModal() {
 document.getElementById('modalOverlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
+
+// ---- IFRAME VIEWER ----
+function openIframe() {
+  closeModal();
+  const iframe = document.getElementById('articleIframe');
+  iframe.src = currentArticleLink;
+  document.getElementById('iframeOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // If iframe blocked, show fallback after 4 seconds
+  iframe.onerror = showIframeBlocked;
+  setTimeout(() => {
+    try {
+      // Check if iframe loaded something
+      if (!iframe.contentDocument && !iframe.contentWindow) showIframeBlocked();
+    } catch(e) { /* cross-origin — likely loaded fine */ }
+  }, 4000);
+}
+function closeIframe() {
+  document.getElementById('iframeOverlay').classList.remove('open');
+  document.getElementById('articleIframe').src = '';
+  document.body.style.overflow = '';
+}
+function showIframeBlocked() {
+  document.getElementById('articleIframe').style.display = 'none';
+  // show fallback
+  const blocked = document.createElement('div');
+  blocked.className = 'iframe-blocked';
+  blocked.innerHTML = `
+    <h3>Article Opens in New Tab</h3>
+    <p>This source doesn't allow embedding. Click below to read — your NexaByte tab stays open!</p>
+    <a href="${currentArticleLink}" target="_blank" rel="noopener" class="open-external-btn">Read Full Article ↗</a>
+    <button onclick="closeIframe()" style="background:none;border:none;color:var(--muted);cursor:pointer;margin-top:8px;font-size:13px;">← Back to NexaByte</button>
+  `;
+  document.getElementById('iframeOverlay').appendChild(blocked);
+}
 
 // ---- MAIN LOAD ----
 async function loadNews() {
