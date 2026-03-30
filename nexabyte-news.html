@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexaByte News – Global Tech, Every Minute</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d0d0d;
+  --paper: #f5f0e8;
+  --cream: #ede8dc;
+  --accent: #e63022;
+  --accent2: #1a3a5c;
+  --gold: #c9a84c;
+  --muted: #6b6560;
+  --border: #d4cfc4;
+  --white: #ffffff;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* TICKER */
+.ticker-wrap {
+  background: var(--accent);
+  color: #fff;
+  padding: 7px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-label {
+  display: inline-block;
+  background: var(--ink);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  padding: 2px 14px;
+  margin-right: 20px;
+  text-transform: uppercase;
+}
+.ticker-track {
+  display: inline-block;
+  animation: ticker 40s linear infinite;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+.ticker-track span { margin: 0 40px; }
+.ticker-track span::before { content: '◆ '; font-size: 8px; opacity: 0.7; }
+@keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* MASTHEAD */
+.masthead {
+  background: var(--white);
+  border-bottom: 3px solid var(--ink);
+  padding: 0 24px;
+}
+.masthead-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0 14px;
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 6vw, 48px);
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.logo span { color: var(--accent); }
+.logo-tagline {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.masthead-meta {
+  text-align: right;
+  font-size: 12px;
+  color: var(--muted);
+}
+.masthead-meta strong { display: block; font-size: 13px; color: var(--ink); }
+
+/* NAV */
+.nav {
+  display: flex;
+  gap: 0;
+  padding: 10px 0 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav a {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 8px 18px 10px;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.nav a:hover, .nav a.active { border-bottom-color: var(--accent); color: var(--accent); }
+.nav a:first-child { padding-left: 0; }
+
+/* ADSENSE BANNER */
+.ad-banner {
+  background: var(--cream);
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  text-align: center;
+  padding: 16px;
+  margin: 16px 24px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.ad-banner strong { display: block; font-size: 13px; color: var(--ink); margin-bottom: 4px; }
+
+/* LAYOUT */
+.page { max-width: 1200px; margin: 0 auto; padding: 24px 24px 60px; }
+
+/* FEATURED STRIP */
+.featured-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-top: 3px solid var(--accent);
+  padding-top: 8px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.featured-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* HERO GRID */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.hero-main {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+  background: var(--white);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.hero-main .card-img {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1a2a4a 0%, #0d1b2e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+}
+.hero-main .card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+}
+.hero-main .card-body {
+  position: relative;
+  z-index: 2;
+  padding: 24px;
+  color: #fff;
+}
+.hero-main .card-body .cat {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #fff;
+  padding: 3px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.hero-main .card-body h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.hero-main .card-body p { font-size: 13px; opacity: 0.8; }
+
+.side-card {
+  background: var(--white);
+  padding: 18px;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.side-card:hover { background: #faf9f5; }
+.side-card .cat {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.side-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.side-card p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.side-card .meta { font-size: 11px; color: var(--muted); margin-top: auto; }
+
+/* NEWS GRID */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 20px;
+  border-top: 3px solid var(--ink);
+  padding-top: 10px;
+}
+.section-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+.section-header a {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  margin-left: auto;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.news-card {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+  cursor: pointer;
+}
+.news-card .card-icon {
+  width: 100%;
+  height: 140px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, #1a2a4a, #0d1b2e);
+}
+.news-card .cat {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.news-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.news-card p { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
+.news-card .meta { font-size: 11px; color: var(--muted); }
+.news-card .meta span { color: var(--accent2); font-weight: 600; }
+
+/* TWO COL LAYOUT */
+.two-col { display: grid; grid-template-columns: 1fr 320px; gap: 40px; margin-bottom: 40px; }
+
+/* LIST NEWS */
+.list-news { display: flex; flex-direction: column; gap: 0; }
+.list-item {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.list-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--border);
+  line-height: 1;
+  min-width: 36px;
+  flex-shrink: 0;
+}
+.list-item:hover .list-num { color: var(--accent); }
+.list-content h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.list-content p { font-size: 12px; color: var(--muted); }
+
+/* SIDEBAR */
+.sidebar {}
+.sidebar-widget {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.widget-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+.trend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--cream);
+  font-size: 13px;
+  cursor: pointer;
+}
+.trend-item:last-child { border-bottom: none; }
+.trend-icon { font-size: 18px; }
+.trend-text { font-weight: 500; color: var(--ink); }
+.trend-text small { display: block; font-size: 11px; color: var(--muted); font-weight: 400; }
+
+/* ADSENSE SIDEBAR */
+.ad-sidebar {
+  background: var(--cream);
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.ad-sidebar .ad-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.ad-sidebar .ad-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 4px;
+}
+.ad-sidebar .ad-box span { font-size: 11px; color: var(--muted); }
+.ad-sidebar .ad-box strong { font-size: 13px; color: var(--ink); }
+
+/* LOADING */
+.loading-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--cream) 25%, #e8e3d8 50%, var(--cream) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 4px;
+}
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+.skel-img { height: 140px; margin-bottom: 12px; }
+.skel-cat { height: 12px; width: 60px; margin-bottom: 8px; }
+.skel-title { height: 18px; margin-bottom: 6px; }
+.skel-title2 { height: 18px; width: 75%; margin-bottom: 10px; }
+.skel-text { height: 12px; margin-bottom: 4px; }
+.skel-text2 { height: 12px; width: 80%; }
+
+/* STATUS */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* FOOTER */
+footer {
+  background: var(--ink);
+  color: #fff;
+  padding: 40px 24px 24px;
+  margin-top: 40px;
+}
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+.footer-logo span { color: var(--accent); }
+.footer-tagline { font-size: 12px; color: #94a3b8; margin-bottom: 24px; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
+.footer-links a { color: #94a3b8; text-decoration: none; font-size: 12px; }
+.footer-links a:hover { color: #fff; }
+.footer-bottom { border-top: 1px solid #1e293b; padding-top: 16px; font-size: 11px; color: #64748b; }
+
+@media (max-width: 768px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-main { grid-column: 1; grid-row: 1; min-height: 260px; }
+  .two-col { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+}
+
+/* ARTICLE MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+.modal {
+  background: var(--white);
+  max-width: 720px;
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: auto;
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp { from{transform:translateY(30px);opacity:0} to{transform:translateY(0);opacity:1} }
+.modal-header {
+  background: var(--ink);
+  color: #fff;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+.modal-body { padding: 28px 24px; }
+.modal-cat { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 12px; }
+.modal-meta { font-size: 12px; color: var(--muted); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.modal-content { font-size: 15px; line-height: 1.8; color: #333; }
+.modal-content p { margin-bottom: 16px; }
+.modal-ad { background: var(--cream); border: 1px dashed var(--border); padding: 14px; text-align: center; margin: 20px 0; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.read-more-btn {
+  display: inline-block;
+  margin-top: 16px;
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 3px;
+  transition: background 0.2s;
+  cursor: pointer;
+  border: none;
+}
+.read-more-btn:hover { background: #c0271a; }
+
+/* ARTICLE IFRAME VIEWER */
+.iframe-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 2000;
+  flex-direction: column;
+}
+.iframe-overlay.open { display: flex; }
+.iframe-toolbar {
+  background: var(--ink);
+  color: #fff;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.iframe-toolbar .site-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 16px;
+}
+.iframe-toolbar .site-name span { color: var(--accent); }
+.iframe-toolbar .article-title {
+  font-size: 12px;
+  color: #94a3b8;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.iframe-close-btn {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.iframe-notice {
+  background: #1a2a1a;
+  color: #86efac;
+  font-size: 12px;
+  padding: 6px 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.article-iframe {
+  flex: 1;
+  border: none;
+  width: 100%;
+  background: #fff;
+}
+.iframe-blocked {
+  flex: 1;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px;
+  text-align: center;
+}
+.iframe-blocked h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+.iframe-blocked p { color: var(--muted); font-size: 14px; max-width: 400px; }
+.open-external-btn {
+  background: var(--accent2);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-block;
+}
+</style>
+</head>
+<body>
+
+<!-- BREAKING TICKER -->
+<div class="ticker-wrap">
+  <span class="ticker-label">Breaking</span>
+  <span class="ticker-track" id="tickerTrack">
+    <span>Loading latest headlines...</span>
+  </span>
+</div>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-top">
+    <div>
+      <div class="logo">Nexa<span>Byte</span> News</div>
+      <div class="logo-tagline">Global Tech · Every Minute</div>
+    </div>
+    <div class="masthead-meta">
+      <strong id="currentDate">Loading...</strong>
+      <span id="currentTime">--:--</span> IST
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="#" class="active">Home</a>
+    <a href="#">AI & ML</a>
+    <a href="#">Startups</a>
+    <a href="#">Gadgets</a>
+    <a href="#">Cybersecurity</a>
+    <a href="#">Space Tech</a>
+    <a href="#">Crypto</a>
+    <a href="#">Science</a>
+  </nav>
+</div>
+
+<!-- TOP AD BANNER -->
+<div class="ad-banner">
+  <strong>Advertisement</strong>
+  <!-- REPLACE THIS COMMENT WITH YOUR ADSENSE CODE -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX"></script> -->
+  728 × 90 — AdSense Banner (Paste your AdSense code here)
+</div>
+
+<div class="page">
+
+  <!-- FEATURED -->
+  <div class="featured-label">Featured Stories</div>
+
+  <!-- HERO GRID -->
+  <div class="hero-grid" id="heroGrid">
+    <div class="hero-main">
+      <div class="card-img">🤖</div>
+      <div class="card-body">
+        <span class="cat">AI & Machine Learning</span>
+        <h2>Loading latest top story...</h2>
+        <p>Fetching live tech news for you</p>
+      </div>
+    </div>
+    <div class="side-card"><div class="cat">Loading</div><h3>Fetching news...</h3><p>Please wait</p></div>
+    <div class="side-card"><div class="cat">Loading</div><h3>Fetching news...</h3><p>Please wait</p></div>
+  </div>
+
+  <!-- LATEST NEWS -->
+  <div class="section-header">
+    <h2>Latest Tech News</h2>
+    <div class="status-bar"><div class="dot"></div> <span id="lastUpdate">Auto-updating</span></div>
+    <a href="#">View All →</a>
+  </div>
+
+  <div id="newsGrid" class="news-grid">
+    <!-- Skeleton loaders -->
+    <div><div class="skeleton skel-img"></div><div class="skeleton skel-cat"></div><div class="skeleton skel-title"></div><div class="skeleton skel-title2"></div><div class="skeleton skel-text"></div><div class="skeleton skel-text2"></div></div>
+    <div><div class="skeleton skel-img"></div><div class="skeleton skel-cat"></div><div class="skeleton skel-title"></div><div class="skeleton skel-title2"></div><div class="skeleton skel-text"></div><div class="skeleton skel-text2"></div></div>
+    <div><div class="skeleton skel-img"></div><div class="skeleton skel-cat"></div><div class="skeleton skel-title"></div><div class="skeleton skel-title2"></div><div class="skeleton skel-text"></div><div class="skeleton skel-text2"></div></div>
+  </div>
+
+  <!-- TWO COLUMN -->
+  <div class="two-col">
+    <!-- TRENDING LIST -->
+    <div>
+      <div class="section-header"><h2>Trending Now</h2></div>
+      <div class="list-news" id="trendingList">
+        <div style="color:var(--muted);font-size:13px;padding:20px 0;">Loading trending stories...</div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="ad-sidebar">
+        <div class="ad-label">Advertisement</div>
+        <div class="ad-box">
+          <strong>AdSense 300×250</strong>
+          <span>Paste your ad code here</span>
+          <!-- ADSENSE SIDEBAR CODE HERE -->
+        </div>
+      </div>
+      <div class="sidebar-widget">
+        <div class="widget-title">Topics</div>
+        <div id="topicsList">
+          <div class="trend-item"><span class="trend-icon">🤖</span><div class="trend-text">Artificial Intelligence <small>Trending globally</small></div></div>
+          <div class="trend-item"><span class="trend-icon">🚀</span><div class="trend-text">Space Tech <small>Latest missions</small></div></div>
+          <div class="trend-item"><span class="trend-icon">🔒</span><div class="trend-text">Cybersecurity <small>Top threats</small></div></div>
+          <div class="trend-item"><span class="trend-icon">💻</span><div class="trend-text">Startups <small>Funding news</small></div></div>
+          <div class="trend-item"><span class="trend-icon">📱</span><div class="trend-text">Gadgets & Reviews <small>What's new</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Nexa<span>Byte</span> News</div>
+    <div class="footer-tagline">Global Tech · Every Minute · Powered by AI Aggregation</div>
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Advertise</a>
+      <a href="#">Sitemap</a>
+    </div>
+    <div class="footer-bottom">© 2025 NexaByte News. All rights reserved. Tech news aggregated from public RSS feeds.</div>
+  </div>
+</footer>
+
+<!-- ARTICLE MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <span style="font-size:13px;letter-spacing:1px;text-transform:uppercase;">NexaByte News</span>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-cat" id="modalCat"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-meta" id="modalMeta"></div>
+      <div class="modal-ad">Advertisement — AdSense In-Article Ad Here</div>
+      <div class="modal-content" id="modalContent"></div>
+      <button class="read-more-btn" onclick="openIframe()">Read Full Article (Stay on NexaByte) →</button>
+      <a href="#" id="modalLink" style="display:block;margin-top:10px;font-size:12px;color:var(--muted);text-align:center;" target="_blank" rel="noopener">Open in original site ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- IFRAME ARTICLE VIEWER -->
+<div class="iframe-overlay" id="iframeOverlay">
+  <div class="iframe-toolbar">
+    <div class="site-name">Nexa<span>Byte</span></div>
+    <div class="article-title" id="iframeTitle">Loading article...</div>
+    <button class="iframe-close-btn" onclick="closeIframe()">✕ Back to NexaByte</button>
+  </div>
+  <div class="iframe-notice">📰 You are reading this article within NexaByte News — your site stays active!</div>
+  <iframe class="article-iframe" id="articleIframe" src="" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+</div>
+
+<script>
+// ============================================================
+// NEXABYTE NEWS — AUTO CONTENT ENGINE
+// ============================================================
+
+const RSS_FEEDS = [
+  { url: 'https://feeds.feedburner.com/TechCrunch', name: 'TechCrunch' },
+  { url: 'https://www.theverge.com/rss/index.xml', name: 'The Verge' },
+  { url: 'https://feeds.arstechnica.com/arstechnica/index', name: 'Ars Technica' },
+  { url: 'https://www.wired.com/feed/rss', name: 'Wired' },
+  { url: 'https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml', name: 'NYT Tech' },
+];
+
+// Use multiple CORS proxies as fallback
+const CORS_PROXIES = [
+  'https://api.allorigins.win/get?url=',
+  'https://corsproxy.io/?',
+];
+
+const CATEGORIES = ['AI & ML', 'Startups', 'Cybersecurity', 'Gadgets', 'Space Tech', 'Science', 'Crypto', 'Software'];
+const EMOJIS = ['🤖', '🚀', '🔒', '📱', '🛸', '🔬', '💎', '💻', '⚡', '🌐', '🎯', '🔥'];
+const BG_COLORS = [
+  'linear-gradient(135deg,#1a2a4a,#0d1b2e)',
+  'linear-gradient(135deg,#2a1a1a,#3d0d0d)',
+  'linear-gradient(135deg,#1a2a1a,#0d2010)',
+  'linear-gradient(135deg,#2a1a3d,#180d2e)',
+  'linear-gradient(135deg,#1a1a2a,#0d0d1e)',
+];
+
+let allArticles = [];
+
+// ---- DATE/TIME ----
+function updateClock() {
+  const now = new Date();
+  document.getElementById('currentDate').textContent = now.toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// ---- PARSE RSS ----
+function parseRSS(xmlText, sourceName) {
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(xmlText, 'text/xml');
+    const items = doc.querySelectorAll('item, entry');
+    const articles = [];
+    items.forEach((item, i) => {
+      if (i > 8) return;
+      const title = item.querySelector('title')?.textContent?.trim() || '';
+      const desc = item.querySelector('description, summary')?.textContent?.trim() || '';
+      const link = item.querySelector('link')?.textContent?.trim() ||
+                   item.querySelector('link')?.getAttribute('href') || '#';
+      const pubDate = item.querySelector('pubDate, published, updated')?.textContent?.trim() || '';
+      const cleanDesc = desc.replace(/<[^>]+>/g, '').substring(0, 200);
+      if (title && title.length > 10) {
+        articles.push({
+          title,
+          desc: cleanDesc || 'Read the full article for details.',
+          link,
+          source: sourceName,
+          date: pubDate ? new Date(pubDate).toLocaleDateString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Just now',
+          category: CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)],
+          emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
+          bg: BG_COLORS[Math.floor(Math.random() * BG_COLORS.length)],
+        });
+      }
+    });
+    return articles;
+  } catch(e) { return []; }
+}
+
+// ---- FETCH FEED ----
+async function fetchFeed(feed) {
+  for (const proxy of CORS_PROXIES) {
+    try {
+      const res = await fetch(proxy + encodeURIComponent(feed.url), { signal: AbortSignal.timeout(8000) });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const xml = data.contents || data;
+      if (typeof xml === 'string') {
+        const articles = parseRSS(xml, feed.name);
+        if (articles.length > 0) return articles;
+      }
+    } catch(e) { continue; }
+  }
+  return [];
+}
+
+// ---- FALLBACK ARTICLES ----
+function getFallbackArticles() {
+  return [
+    { title: "OpenAI Releases GPT-5 with Unprecedented Reasoning Capabilities", desc: "The latest model demonstrates remarkable improvements in mathematical reasoning, code generation, and multimodal understanding.", link: "#", source: "TechCrunch", date: "Today", category: "AI & ML", emoji: "🤖", bg: BG_COLORS[0] },
+    { title: "Apple WWDC 2025: iOS 19 Brings AI-First Features to Every iPhone", desc: "Apple's developer conference reveals deep AI integration across all system apps with on-device processing.", link: "#", source: "The Verge", date: "Today", category: "Gadgets", emoji: "📱", bg: BG_COLORS[1] },
+    { title: "SpaceX Starship Completes First Commercial Lunar Mission", desc: "The massive rocket successfully delivered a payload to the lunar surface, marking a new era in commercial space exploration.", link: "#", source: "Ars Technica", date: "Today", category: "Space Tech", emoji: "🚀", bg: BG_COLORS[2] },
+    { title: "Google DeepMind's AlphaFold 3 Solves Protein Interactions at Scale", desc: "The breakthrough AI model can now predict interactions between proteins, DNA, and small molecules with high accuracy.", link: "#", source: "Wired", date: "Today", category: "Science", emoji: "🔬", bg: BG_COLORS[3] },
+    { title: "Microsoft Announces $10B Investment in Indian AI Infrastructure", desc: "The tech giant plans to build massive data centers across Hyderabad, Pune, and Bangalore to serve Asian markets.", link: "#", source: "NYT Tech", date: "Today", category: "Startups", emoji: "💻", bg: BG_COLORS[4] },
+    { title: "Tesla's Optimus Robot Now Available for Business Pre-Orders", desc: "The humanoid robot capable of performing warehouse tasks is now accepting orders from enterprise customers.", link: "#", source: "TechCrunch", date: "Today", category: "AI & ML", emoji: "🤖", bg: BG_COLORS[0] },
+    { title: "Bitcoin Hits New All-Time High Above $120,000", desc: "Institutional adoption and ETF inflows drive cryptocurrency to unprecedented valuations.", link: "#", source: "Wired", date: "Today", category: "Crypto", emoji: "💎", bg: BG_COLORS[1] },
+    { title: "Major Cybersecurity Breach Exposes 500M User Records Globally", desc: "Security researchers discover a massive database leak affecting users across multiple platforms.", link: "#", source: "Ars Technica", date: "Today", category: "Cybersecurity", emoji: "🔒", bg: BG_COLORS[2] },
+    { title: "India's Reliance Jio Launches World's Cheapest 5G Smartphone", desc: "The ₹2,999 device brings 5G connectivity to rural India with AI-powered features.", link: "#", source: "The Verge", date: "Today", category: "Gadgets", emoji: "📱", bg: BG_COLORS[3] },
+    { title: "Samsung Galaxy S26 Ultra Leaks Reveal Under-Display Camera", desc: "Next year's flagship may eliminate the front camera notch entirely using new optical technology.", link: "#", source: "NYT Tech", date: "Today", category: "Gadgets", emoji: "📱", bg: BG_COLORS[4] },
+    { title: "Meta's AR Glasses Set to Replace Smartphones by 2028", desc: "The social media giant believes augmented reality wearables will be the next major computing platform.", link: "#", source: "TechCrunch", date: "Today", category: "AI & ML", emoji: "🌐", bg: BG_COLORS[0] },
+    { title: "India Becomes World's #2 Startup Ecosystem Overtaking UK", desc: "With 120+ unicorns and record funding, India's tech startup scene surpasses the United Kingdom.", link: "#", source: "Wired", date: "Today", category: "Startups", emoji: "🎯", bg: BG_COLORS[1] },
+  ];
+}
+
+// ---- RENDER HERO ----
+function renderHero(articles) {
+  const main = articles[0];
+  const s1 = articles[1];
+  const s2 = articles[2];
+  document.getElementById('heroGrid').innerHTML = `
+    <div class="hero-main" onclick="openModal(${0})">
+      <div class="card-img" style="background:${main.bg}">${main.emoji}</div>
+      <div class="card-body">
+        <span class="cat">${main.category}</span>
+        <h2>${main.title}</h2>
+        <p>${main.desc.substring(0,100)}...</p>
+      </div>
+    </div>
+    <div class="side-card" onclick="openModal(${1})">
+      <div class="cat">${s1.category}</div>
+      <h3>${s1.title}</h3>
+      <p>${s1.desc.substring(0,80)}...</p>
+      <div class="meta">${s1.source} · ${s1.date}</div>
+    </div>
+    <div class="side-card" onclick="openModal(${2})">
+      <div class="cat">${s2.category}</div>
+      <h3>${s2.title}</h3>
+      <p>${s2.desc.substring(0,80)}...</p>
+      <div class="meta">${s2.source} · ${s2.date}</div>
+    </div>
+  `;
+}
+
+// ---- RENDER NEWS GRID ----
+function renderGrid(articles) {
+  const gridArticles = articles.slice(3, 9);
+  document.getElementById('newsGrid').innerHTML = gridArticles.map((a, i) => `
+    <div class="news-card" onclick="openModal(${i + 3})">
+      <div class="card-icon" style="background:${a.bg}">${a.emoji}</div>
+      <div class="cat">${a.category}</div>
+      <h3>${a.title}</h3>
+      <p>${a.desc.substring(0,110)}...</p>
+      <div class="meta"><span>${a.source}</span> · ${a.date}</div>
+    </div>
+  `).join('');
+}
+
+// ---- RENDER TRENDING ----
+function renderTrending(articles) {
+  const trending = articles.slice(9);
+  document.getElementById('trendingList').innerHTML = trending.map((a, i) => `
+    <div class="list-item" onclick="openModal(${i + 9})">
+      <div class="list-num">0${i+1}</div>
+      <div class="list-content">
+        <h4>${a.title}</h4>
+        <p>${a.source} · ${a.category} · ${a.date}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ---- RENDER TICKER ----
+function renderTicker(articles) {
+  const tickerText = articles.slice(0, 8).map(a => `<span>${a.title}</span>`).join('');
+  document.getElementById('tickerTrack').innerHTML = tickerText + tickerText;
+}
+
+// ---- OPEN MODAL ----
+let currentArticleLink = '#';
+function openModal(idx) {
+  const a = allArticles[idx];
+  if (!a) return;
+  currentArticleLink = a.link;
+  document.getElementById('modalCat').textContent = a.category;
+  document.getElementById('modalTitle').textContent = a.title;
+  document.getElementById('modalMeta').textContent = `${a.source} · ${a.date}`;
+  document.getElementById('modalContent').innerHTML = `
+    <p>${a.desc}</p>
+    <p>This article covers the latest developments in ${a.category}. The tech industry continues to evolve rapidly with new breakthroughs emerging daily. Stay tuned to NexaByte News for real-time updates and in-depth coverage.</p>
+    <p>Click <strong>"Read Full Article"</strong> below to read the complete story — you will stay on NexaByte News!</p>
+  `;
+  document.getElementById('modalLink').href = a.link;
+  document.getElementById('iframeTitle').textContent = a.title;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ---- IFRAME VIEWER ----
+function openIframe() {
+  closeModal();
+  const iframe = document.getElementById('articleIframe');
+  iframe.src = currentArticleLink;
+  document.getElementById('iframeOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // If iframe blocked, show fallback after 4 seconds
+  iframe.onerror = showIframeBlocked;
+  setTimeout(() => {
+    try {
+      // Check if iframe loaded something
+      if (!iframe.contentDocument && !iframe.contentWindow) showIframeBlocked();
+    } catch(e) { /* cross-origin — likely loaded fine */ }
+  }, 4000);
+}
+function closeIframe() {
+  document.getElementById('iframeOverlay').classList.remove('open');
+  document.getElementById('articleIframe').src = '';
+  document.body.style.overflow = '';
+}
+function showIframeBlocked() {
+  document.getElementById('articleIframe').style.display = 'none';
+  // show fallback
+  const blocked = document.createElement('div');
+  blocked.className = 'iframe-blocked';
+  blocked.innerHTML = `
+    <h3>Article Opens in New Tab</h3>
+    <p>This source doesn't allow embedding. Click below to read — your NexaByte tab stays open!</p>
+    <a href="${currentArticleLink}" target="_blank" rel="noopener" class="open-external-btn">Read Full Article ↗</a>
+    <button onclick="closeIframe()" style="background:none;border:none;color:var(--muted);cursor:pointer;margin-top:8px;font-size:13px;">← Back to NexaByte</button>
+  `;
+  document.getElementById('iframeOverlay').appendChild(blocked);
+}
+
+// ---- MAIN LOAD ----
+async function loadNews() {
+  try {
+    const promises = RSS_FEEDS.map(f => fetchFeed(f));
+    const results = await Promise.allSettled(promises);
+    let fetched = [];
+    results.forEach(r => { if (r.status === 'fulfilled') fetched = fetched.concat(r.value); });
+
+    // Shuffle
+    fetched = fetched.sort(() => Math.random() - 0.5);
+
+    if (fetched.length >= 6) {
+      allArticles = fetched;
+    } else {
+      allArticles = getFallbackArticles();
+    }
+
+    renderHero(allArticles);
+    renderGrid(allArticles);
+    renderTrending(allArticles);
+    renderTicker(allArticles);
+
+    const now = new Date();
+    document.getElementById('lastUpdate').textContent = `Updated ${now.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'})}`;
+
+  } catch(e) {
+    allArticles = getFallbackArticles();
+    renderHero(allArticles);
+    renderGrid(allArticles);
+    renderTrending(allArticles);
+    renderTicker(allArticles);
+  }
+}
+
+loadNews();
+// Auto-refresh every 10 minutes
+setInterval(loadNews, 10 * 60 * 1000);
+</script>
+</body>
+</html>
